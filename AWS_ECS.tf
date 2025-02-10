@@ -38,10 +38,10 @@ resource "aws_ecs_task_definition" "example" {
 }
 
 resource "aws_lb_target_group" "example" {
-  name     = "example-target-group"
+  name     = "Avitg"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = ""  # Replace with your VPC ID
+  vpc_id   = "vpc-0b25f7ef0f18ee5ef"  # Replace with your VPC ID
   target_type = "ip"  # Ensure this is set to 'ip' for Fargate
 
   health_check {

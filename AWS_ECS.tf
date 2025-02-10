@@ -63,6 +63,7 @@ resource "aws_ecs_service" "example" {
     security_groups = ["sg-0d988d042b4944b58"]  # Replace with your security group ID
     assign_public_ip = true
   }
+}
 resource "spacelift_stack" "example" {
   name       = "example-stack"
   repository = "https://github.com/ANawle/AWS_ECS/edit/main/AWS_ECS.tf"  # Ensure this is correct

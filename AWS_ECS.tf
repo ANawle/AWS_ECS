@@ -41,7 +41,7 @@ resource "aws_lb_target_group" "example" {
   name     = "example-target-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = "vpc-12345678"  # Replace with your VPC ID
+  vpc_id   = ""  # Replace with your VPC ID
   target_type = "ip"  # Ensure this is set to 'ip' for Fargate
 
   health_check {
@@ -73,7 +73,7 @@ resource "aws_ecs_service" "example" {
 
 resource "spacelift_stack" "example" {
   name       = "example-stack"
-  repository = "your-github-org/your-repository"  # Ensure this is correct
+  repository = "https://github.com/ANawle/AWS_ECS/edit/main/AWS_ECS.tf"  # Ensure this is correct
   branch     = "main"  # Correct branch
   
   # Ensure the GitHub App has proper access to the repository.

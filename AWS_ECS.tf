@@ -1,6 +1,19 @@
+terraform {
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+      version = "5.86.0"  # Specify the version if needed
+    }
+    spacelift = {
+      source = "spacelift-io/spacelift"
+    }
+  }
+}
+
 provider "aws" {
   region = "ap-south-1"  # Adjust your region
 }
+
 resource "aws_ecs_cluster" "example" {
   name = "example-cluster"
 }
@@ -11,11 +24,11 @@ resource "aws_ecs_task_definition" "example" {
   network_mode             = "awsvpc"
   cpu                      = "256"
   memory                   = "512"
-  execution_role_arn       = "arn:aws:iam::992382549591:role/ecsTaskExecutionRoleAvinash" # Replace with your ECS execution role ARN
+  execution_role_arn       = "arn:aws:iam::992382549591:role/ecsTaskExecutionRoleAvinash"  # Replace with your ECS execution role ARN
 
   container_definitions = jsonencode([{
     name      = "example-container"
-    image     = "nginx:latest" # Replace with your container image
+    image     = "nginx:latest"  # Replace with your container image
     essential = true
     portMappings = [{
       containerPort = 80
@@ -68,8 +81,8 @@ resource "spacelift_stack" "example" {
 
   lifecycle {
     ignore_changes = [
-      # List attributes to ignore during Terraform plan and apply
       aws_ecs_service.example.desired_count
     ]
   }
 }
+

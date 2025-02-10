@@ -58,31 +58,24 @@ resource "aws_ecs_service" "example" {
 }
 
 resource "spacelift_stack" "example" {
-  name     = "example-stack"
-  workspace = "my-spacelift-workspace"
-
-  terraform {
-    version = "latest"  # Specify your desired Terraform version
-    settings {
-      backend = "s3"
-      config = {
-        bucket = "your-terraform-backend-bucket"
-        key    = "example/terraform.tfstate"
-        region = "ap-south-1"
-      }
+  name      = "example-stack"
+  repository = "your-repository"  # Replace with your Git repository URL (e.g., github.com/user/repo)
+  branch     = "main"  # Specify the branch for the repository
+  
+  # Spacelift-specific configurations
+  configuration = {
+    backend = "s3"
+    config = {
+      bucket = "your-terraform-backend-bucket"
+      key    = "example/terraform.tfstate"
+      region = "ap-south-1"
     }
   }
 
-  applies_to = [aws_ecs_service.example]
-
-  trigger {
-    on_change = true
-  }
-
-  lifecycle {
-    ignore_changes = [
-      aws_ecs_service.example.desired_count
-    ]
-  }
+  # Specify the stacks that Spacelift should apply to
+  applies_to = [
+    aws_ecs_service.example
+  ]
 }
+
 

@@ -38,7 +38,7 @@ resource "aws_ecs_task_definition" "example" {
 }
 
 resource "aws_lb_target_group" "example" {
-  name     = "Avitg"
+  name     = "Avitg1"
   port     = 80
   protocol = "HTTP"
   vpc_id   = "vpc-0b25f7ef0f18ee5ef"  # Replace with your VPC ID

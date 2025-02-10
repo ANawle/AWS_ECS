@@ -37,6 +37,20 @@ resource "aws_ecs_task_definition" "example" {
   }])
 }
 
+resource "aws_lb_target_group" "example" {
+  name     = "example-target-group"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = "vpc-12345678"  # Replace with your VPC ID
+  target_type = "ip"  # Ensure this is set to 'ip' for Fargate
+
+  health_check {
+    path = "/"
+    port = "traffic-port"
+    protocol = "HTTP"
+  }
+}
+
 resource "aws_ecs_service" "example" {
   name            = "example-service"
   cluster         = aws_ecs_cluster.example.id
@@ -51,7 +65,7 @@ resource "aws_ecs_service" "example" {
   }
 
   load_balancer {
-    target_group_arn = "arn:aws:elasticloadbalancing:ap-south-1:992382549591:targetgroup/Avitg/76d56b76b4fd56a6"  # Replace with your ALB Target Group ARN
+    target_group_arn = aws_lb_target_group.example.arn  # Use the updated target group ARN
     container_name   = "example-container"
     container_port   = 80
   }
@@ -59,9 +73,8 @@ resource "aws_ecs_service" "example" {
 
 resource "spacelift_stack" "example" {
   name       = "example-stack"
-  repository = "your-repository"  # Replace with your Git repository URL (e.g., github.com/user/repo)
-  branch     = "main"  # Specify the branch for the repository
-
-  # Add any other necessary configuration for Spacelift stack here.
-  # For example, you could specify a different `workspace` or other stack-specific settings if applicable.
+  repository = "your-github-org/your-repository"  # Ensure this is correct
+  branch     = "main"  # Correct branch
+  
+  # Ensure the GitHub App has proper access to the repository.
 }

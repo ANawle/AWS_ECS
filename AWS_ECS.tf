@@ -59,8 +59,8 @@ resource "aws_ecs_service" "example" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = ["subnet-12345678"]  # Replace with your subnet IDs
-    security_groups = ["subnet-0096e4805ecebb1f8"]  # Replace with your security group ID
+    subnets          = ["subnet-05850df941d39044a"]  # Replace with your subnet IDs
+    security_groups = ["sg-0d988d042b4944b58"]  # Replace with your security group ID
     assign_public_ip = true
   }
 

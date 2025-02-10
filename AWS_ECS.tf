@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source = "hashicorp/aws"
-      version = "5.86.0"  # Specify the version if needed
+      version = "5.86.0"
     }
     spacelift = {
       source = "spacelift-io/spacelift"
@@ -58,24 +58,10 @@ resource "aws_ecs_service" "example" {
 }
 
 resource "spacelift_stack" "example" {
-  name      = "example-stack"
+  name       = "example-stack"
   repository = "your-repository"  # Replace with your Git repository URL (e.g., github.com/user/repo)
   branch     = "main"  # Specify the branch for the repository
-  
-  # Spacelift-specific configurations
-  configuration = {
-    backend = "s3"
-    config = {
-      bucket = "your-terraform-backend-bucket"
-      key    = "example/terraform.tfstate"
-      region = "ap-south-1"
-    }
-  }
 
-  # Specify the stacks that Spacelift should apply to
-  applies_to = [
-    aws_ecs_service.example
-  ]
+  # Add any other necessary configuration for Spacelift stack here.
+  # For example, you could specify a different `workspace` or other stack-specific settings if applicable.
 }
-
-
